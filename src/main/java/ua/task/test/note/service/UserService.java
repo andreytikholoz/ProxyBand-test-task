@@ -17,6 +17,9 @@ public class UserService {
     private UserMapper userMapper;
 
     public UserDTO createUser(UserDTO userDTO) {
+        if (userRepository.existsByUsername(userDTO.getUsername())) {
+            throw new IllegalStateException("User with id = [" + userDTO.getUsername() + "] is already exist");
+        }
         UserEntity userEntity = createUserEntity(userDTO);
         UserEntity createdUserEntity = userRepository.save(userEntity);
         return userMapper.map(createdUserEntity);

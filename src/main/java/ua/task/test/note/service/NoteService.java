@@ -10,6 +10,7 @@ import ua.task.test.note.repository.NoteRepository;
 
 import java.sql.Date;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,14 +25,14 @@ public class NoteService {
     public NoteDTO createNote(NoteDTO noteDTO, String username) {
         NoteEntity noteEntity = createNoteEntity(noteDTO, username);
         NoteEntity createdNoteEntity = noteRepository.save(noteEntity);
-        createdNoteEntity.setDate(Date.from(Instant.now()));
         return noteMapper.map(createdNoteEntity);
     }
 
     public NoteDTO updateNote(NoteDTO noteDTO, String username) {
-        NoteEntity noteEntity = createNoteEntity(noteDTO, username);
-        noteEntity.setId(noteDTO.getId());
-        NoteEntity updatedNoteEntity = noteRepository.save(noteEntity);
+        NoteEntity noteEntityToUpdate = noteRepository.findByIdAndUsername(noteDTO.getId(), username).orElseThrow(() ->
+                new IllegalStateException("Note with id = [" + noteDTO.getId() + "] not exist"));
+        noteEntityToUpdate.setNote(noteDTO.getNote());
+        NoteEntity updatedNoteEntity = noteRepository.save(noteEntityToUpdate);
         return noteMapper.map(updatedNoteEntity);
     }
 
@@ -40,11 +41,9 @@ public class NoteService {
     }
 
     public NoteListDTO getNoteListByUsername(String username, boolean sort) {
-        List<NoteEntity> noteEntities;
+        List<NoteEntity> noteEntities = noteRepository.findAllByUsername(username);
         if (sort) {
-            noteEntities = noteRepository.findAllByUsernameOrderByDate(username);
-        } else {
-            noteEntities = noteRepository.findAllByUsername(username);
+            noteEntities.sort(Collections.reverseOrder());
         }
         List<NoteDTO> notes = noteEntities
                 .stream()
@@ -56,11 +55,9 @@ public class NoteService {
     }
 
     public NoteListDTO getAllNotes(boolean sort) {
-        List<NoteEntity> noteEntities;
+        List<NoteEntity> noteEntities = noteRepository.findAll();
         if (sort) {
-            noteEntities = noteRepository.findAllOrderByDate();
-        } else {
-            noteEntities = noteRepository.findAll();
+            noteEntities.sort(Collections.reverseOrder());
         }
         List<NoteDTO> notes = noteEntities
                 .stream()
@@ -74,7 +71,6 @@ public class NoteService {
     public NoteDTO putLike(String noteId, String username) {
         NoteEntity noteEntityToLike = noteRepository.findById(noteId).orElseThrow(() ->
                 new IllegalStateException("Note with id = [" + noteId + "] not exist"));
-
         noteEntityToLike.setLikes(noteEntityToLike.getLikes() + 1);
         NoteEntity likedNoteEntity = noteRepository.save(noteEntityToLike);
         return noteMapper.map(likedNoteEntity);
@@ -83,7 +79,6 @@ public class NoteService {
     public NoteDTO putDislike(String noteId, String username) {
         NoteEntity noteEntityToDislike = noteRepository.findById(noteId).orElseThrow(() ->
                 new IllegalStateException("Note with id = [" + noteId + "] not exist"));
-
         noteEntityToDislike.setLikes(noteEntityToDislike.getLikes() - 1);
         NoteEntity dislikedNoteEntity = noteRepository.save(noteEntityToDislike);
         return noteMapper.map(dislikedNoteEntity);
@@ -94,6 +89,7 @@ public class NoteService {
         noteEntity.setUsername(username);
         noteEntity.setNote(noteDTO.getNote());
         noteEntity.setLikes(noteDTO.getLikes());
+        noteEntity.setDate(Date.from(Instant.now()));
         return noteEntity;
     }
 }

@@ -8,11 +8,16 @@ import java.util.Date;
 
 @Data
 @Document(collection = "Note")
-public class NoteEntity {
+public class NoteEntity implements Comparable<NoteEntity> {
     @Id
     private String id;
     private String username;
     private String note;
     private int likes;
     private Date date;
+
+    @Override
+    public int compareTo(NoteEntity noteEntity) {
+        return getDate().compareTo(noteEntity.getDate());
+    }
 }

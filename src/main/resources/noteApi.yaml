@@ -118,7 +118,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/NoteDTO"
-  /note/user:
+  /user:
     post:
       summary: createUser
       operationId: createUser
@@ -141,15 +141,22 @@ components:
       type: object
       required:
         - id
+        - username
         - note
         - likes
+        - date
       properties:
         id:
+          type: string
+        username:
           type: string
         note:
           type: string
         likes:
           type: integer
+        date:
+          type: string
+          format: date
     NoteListDTO:
       type: object
       properties:

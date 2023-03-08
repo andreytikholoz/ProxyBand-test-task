@@ -1,0 +1,314 @@
+{
+	"info": {
+		"_postman_id": "77a4aead-0579-484f-ae39-70cb364cb1f9",
+		"name": "Test task ProxyBand",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20555564"
+	},
+	"item": [
+		{
+			"name": "1.1 Create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Andriy01\",\r\n    \"password\": 1111\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.2 Create note by created user",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Andriy01",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "1111",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"note\": \"Today I need call Sasha\",\r\n    \"likes\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/note",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.3 Update note IMPORTANT: you need to pass \"id\" of created user from step 1.2 in body(field \"id\")",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Andriy01",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "1111",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"6408e5c75a354b4f533b5c2b\",\r\n    \"username\": \"Andriy01\",\r\n    \"note\": \"Today I need call Sasha 2 times!!!\",\r\n    \"likes\": 0,\r\n    \"date\": \"2023-03-08T19:45:11.433+00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/note",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.4 Put like to note IMPORTANT: you need to pass \"noteId\" of created user from step 1.2 in params",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Andriy01",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "1111",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/note/like?noteId=6408e7cd5a354b4f533b5c2c",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"note",
+						"like"
+					],
+					"query": [
+						{
+							"key": "noteId",
+							"value": "6408e7cd5a354b4f533b5c2c"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.5 Put dislike to note IMPORTANT: you need to pass \"noteId\" of created user from step 1.2 in params",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Andriy01",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "1111",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/note/dislike?noteId=6408e7cd5a354b4f533b5c2c",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"note",
+						"dislike"
+					],
+					"query": [
+						{
+							"key": "noteId",
+							"value": "6408e7cd5a354b4f533b5c2c"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.6 Delete note IMPORTANT: you need to pass \"id\" of created user from step 1.2 in params",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Andriy01",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "1111",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/note?id=6408e5c75a354b4f533b5c2b",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"note"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "6408e5c75a354b4f533b5c2b"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.7 Create note by anonimous",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"note\": \"I'm going to the doctor tomorrow\",\r\n    \"likes\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/note",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.8 Get all notes IMPORTANT: specify to sort or not in params(true or false)",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "1.9 Get notes by user IMPORTANT: specify to sort or not in params(true or false)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Andriy01",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "1111",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/note?sort=true",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"note"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import ua.task.test.note.entity.NoteEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface NoteRepository extends MongoRepository<NoteEntity, String> {
@@ -14,5 +15,7 @@ public interface NoteRepository extends MongoRepository<NoteEntity, String> {
 
     List<NoteEntity> findAllByUsernameOrderByDate(String username);
 
-    List<NoteEntity> findAllOrderByDate();
+    List<NoteEntity> findAll();
+
+    Optional<NoteEntity> findByIdAndUsername(String id, String username);
 }

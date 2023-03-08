@@ -5,12 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.task.test.api.NoteApi;
 import ua.task.test.model.NoteDTO;
 import ua.task.test.model.NoteListDTO;
-import ua.task.test.model.UserDTO;
 import ua.task.test.note.service.NoteService;
 import ua.task.test.note.service.UserService;
 
@@ -74,10 +72,5 @@ public class NoteController implements NoteApi {
     private String getUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
-    }
-
-    @Override
-    public ResponseEntity<UserDTO> createUser(UserDTO userDTO) {
-        return ResponseEntity.ok(userService.createUser(userDTO));
     }
 }

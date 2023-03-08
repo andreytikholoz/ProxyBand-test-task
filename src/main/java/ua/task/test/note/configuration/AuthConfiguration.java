@@ -12,7 +12,7 @@ import ua.task.test.note.filter.RequestFilter;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
 public class AuthConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private RequestFilter requestFilter;
