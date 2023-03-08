@@ -1,0 +1,172 @@
+openapi: "3.0.0"
+info:
+  description: "Test task in the ProxyBand"
+  version: "0.0.1"
+  title: "ua.task.test.Note"
+  contact:
+    email: "tikholoz01@gmail.com"
+paths:
+  /note:
+    post:
+      summary: createNote
+      operationId: createNote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NoteDTO"
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NoteDTO"
+    put:
+      summary: updateNote
+      operationId: updateNote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NoteDTO"
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NoteDTO"
+    delete:
+      summary: deleteNote
+      operationId: deleteNote
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "Successful operation"
+    get:
+      summary: getNoteListByUsername
+      operationId: getNoteListByUsername
+      parameters:
+        - in: query
+          name: sort
+          required: true
+          schema:
+            type: boolean
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NoteListDTO"
+  /note/getAllNotes:
+    get:
+      summary: getAllNotes
+      operationId: getAllNotes
+      parameters:
+        - in: query
+          name: sort
+          required: true
+          schema:
+            type: boolean
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NoteListDTO"
+  /note/like:
+    put:
+      summary: like
+      operationId: like
+      parameters:
+        - in: query
+          name: noteId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NoteDTO"
+  /note/dislike:
+    put:
+      summary: dislike
+      operationId: dislike
+      parameters:
+        - in: query
+          name: noteId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NoteDTO"
+  /note/user:
+    post:
+      summary: createUser
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserDTO"
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDTO"
+components:
+  schemas:
+    NoteDTO:
+      type: object
+      required:
+        - id
+        - note
+        - likes
+      properties:
+        id:
+          type: string
+        note:
+          type: string
+        likes:
+          type: integer
+    NoteListDTO:
+      type: object
+      properties:
+        Notes:
+          type: array
+          items:
+            $ref: "#/components/schemas/NoteDTO"
+    UserDTO:
+      type: object
+      required:
+        - id
+        - username
+        - password
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
