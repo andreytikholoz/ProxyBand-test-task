@@ -101,23 +101,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/NoteDTO"
-  /note/dislike:
-    put:
-      summary: dislike
-      operationId: dislike
-      parameters:
-        - in: query
-          name: noteId
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: "Successful operation"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/NoteDTO"
   /user:
     post:
       summary: createUser

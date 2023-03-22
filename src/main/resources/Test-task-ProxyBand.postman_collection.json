@@ -158,47 +158,7 @@
 			"response": []
 		},
 		{
-			"name": "1.5 Put dislike to note IMPORTANT: you need to pass \"noteId\" of created user from step 1.2 in params",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "Andriy01",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "1111",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/note/dislike?noteId=6408e7cd5a354b4f533b5c2c",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"note",
-						"dislike"
-					],
-					"query": [
-						{
-							"key": "noteId",
-							"value": "6408e7cd5a354b4f533b5c2c"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "1.6 Delete note IMPORTANT: you need to pass \"id\" of created user from step 1.2 in params",
+			"name": "1.5 Delete note IMPORTANT: you need to pass \"id\" of created user from step 1.2 in params",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -237,7 +197,7 @@
 			"response": []
 		},
 		{
-			"name": "1.7 Create note by anonimous",
+			"name": "1.6 Create note by anonimous",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -264,7 +224,7 @@
 			"response": []
 		},
 		{
-			"name": "1.8 Get all notes IMPORTANT: specify to sort or not in params(true or false)",
+			"name": "1.7 Get all notes IMPORTANT: specify to sort or not in params(true or false)",
 			"request": {
 				"method": "GET",
 				"header": []
@@ -272,7 +232,7 @@
 			"response": []
 		},
 		{
-			"name": "1.9 Get notes by user IMPORTANT: specify to sort or not in params(true or false)",
+			"name": "1.8 Get notes by user IMPORTANT: specify to sort or not in params(true or false)",
 			"request": {
 				"auth": {
 					"type": "basic",

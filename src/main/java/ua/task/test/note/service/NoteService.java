@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.task.test.model.NoteDTO;
 import ua.task.test.model.NoteListDTO;
+import ua.task.test.note.entity.LikeEntity;
 import ua.task.test.note.entity.NoteEntity;
 import ua.task.test.note.mapper.NoteMapper;
+import ua.task.test.note.repository.LikeRepository;
 import ua.task.test.note.repository.NoteRepository;
 
 import java.sql.Date;
@@ -19,6 +21,8 @@ public class NoteService {
 
     @Autowired
     private NoteRepository noteRepository;
+    @Autowired
+    private LikeRepository likeRepository;
     @Autowired
     private NoteMapper noteMapper;
 
@@ -69,19 +73,22 @@ public class NoteService {
     }
 
     public NoteDTO putLike(String noteId, String username) {
-        NoteEntity noteEntityToLike = noteRepository.findById(noteId).orElseThrow(() ->
-                new IllegalStateException("Note with id = [" + noteId + "] not exist"));
-        noteEntityToLike.setLikes(noteEntityToLike.getLikes() + 1);
-        NoteEntity likedNoteEntity = noteRepository.save(noteEntityToLike);
-        return noteMapper.map(likedNoteEntity);
-    }
-
-    public NoteDTO putDislike(String noteId, String username) {
-        NoteEntity noteEntityToDislike = noteRepository.findById(noteId).orElseThrow(() ->
-                new IllegalStateException("Note with id = [" + noteId + "] not exist"));
-        noteEntityToDislike.setLikes(noteEntityToDislike.getLikes() - 1);
-        NoteEntity dislikedNoteEntity = noteRepository.save(noteEntityToDislike);
-        return noteMapper.map(dislikedNoteEntity);
+        if (!likeRepository.existsByUsernameAndNoteId(username, noteId)) {
+            NoteEntity noteEntityToLike = noteRepository.findById(noteId).orElseThrow(() ->
+                    new IllegalStateException("Note with id = [" + noteId + "] not exist"));
+            noteEntityToLike.setLikes(noteEntityToLike.getLikes() + 1);
+            NoteEntity likedNoteEntity = noteRepository.save(noteEntityToLike);
+            LikeEntity likeEntity = createLikeEntity(noteId, username);
+            likeRepository.save(likeEntity);
+            return noteMapper.map(likedNoteEntity);
+        } else {
+            NoteEntity noteEntityToLike = noteRepository.findById(noteId).orElseThrow(() ->
+                    new IllegalStateException("Note with id = [" + noteId + "] not exist"));
+            noteEntityToLike.setLikes(noteEntityToLike.getLikes() - 1);
+            NoteEntity likedNoteEntity = noteRepository.save(noteEntityToLike);
+            likeRepository.deleteByUsernameAndNoteId(username, noteId);
+            return noteMapper.map(likedNoteEntity);
+        }
     }
 
     private NoteEntity createNoteEntity(NoteDTO noteDTO, String username) {
@@ -92,4 +99,12 @@ public class NoteService {
         noteEntity.setDate(Date.from(Instant.now()));
         return noteEntity;
     }
+
+    private LikeEntity createLikeEntity(String noteId, String username) {
+        LikeEntity likeEntity = new LikeEntity();
+        likeEntity.setNoteId(noteId);
+        likeEntity.setUsername(username);
+        return likeEntity;
+    }
+
 }

@@ -13,8 +13,6 @@ public interface NoteRepository extends MongoRepository<NoteEntity, String> {
 
     List<NoteEntity> findAllByUsername(String username);
 
-    List<NoteEntity> findAllByUsernameOrderByDate(String username);
-
     List<NoteEntity> findAll();
 
     Optional<NoteEntity> findByIdAndUsername(String id, String username);

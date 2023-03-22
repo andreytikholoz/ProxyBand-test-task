@@ -54,19 +54,11 @@ public class NoteController implements NoteApi {
         return ResponseEntity.ok(noteService.getAllNotes(sort));
     }
 
-
     @Override
     @PreAuthorize("hasRole('ROLE_CREATED_USER')")
     public ResponseEntity<NoteDTO> like(String noteId) {
         String username = getUsername();
         return ResponseEntity.ok(noteService.putLike(noteId, username));
-    }
-
-    @Override
-    @PreAuthorize("hasRole('ROLE_CREATED_USER')")
-    public ResponseEntity<NoteDTO> dislike(String noteId) {
-        String username = getUsername();
-        return ResponseEntity.ok(noteService.putDislike(noteId, username));
     }
 
     private String getUsername() {
