@@ -1,10 +1,21 @@
 # Test task Tikholoz Andriy
 
 ___
+## Requirements
+### For building and running the application you need:
+* JDK 11
+* Maven 3
+* MongoDB installed locally(all connection properties are in *application.properties*)
+
+### How to start service locally
+1. Build the jar file: for this you need to do: *mvn clean install*;
+2. Make sure that the folder called *java* which is in the path *target/generated-sources/test-task/src/main/java* 
+is marked as sources;
+3. Execute the main method in the *Application* class.
 
 ## General info
-####This project is the implementation of the test task.
-####Realized in this version: project implementation with registration of user, create, update and delete of note. 
+#### This project is the implementation of the test task.
+#### Realized in this version: project implementation with registration of user, create, update and delete of note. 
 * Both a registered user and an anonymous user can create a post. 
 * Verification that the user is registered occurs through Basic Auth. 
 * Registered users and anonymous can get a list of all notes. 
